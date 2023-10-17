@@ -4,32 +4,21 @@
     }
 
     stages {
-      
-
-        stage('Build Docker Image') {
+        stage('Building the docker image') {
             steps {
-                script {
-                    // Build the Docker image
-                    def dockerImage = docker.build('my-html-page:latest', "-f Dockerfile .")
-
-                    
-                    
-                }
+                sh 'docker build -t test .'
             }
         }
-
-        stage('Deploy Docker Container') {
-            steps {
-                // Run the Docker container
-                sh 'docker run -d -p 80:80 my-html-page:latest'
+        stage('Remove old docker images') {
+             steps {
+                 sh 'docker rmi -f test'
             }
         }
-    }
-
-    post {
-        success {
-            // Perform any post-deployment actions here
-            echo 'HTML page deployed successfully.'
+         stage('Running the docker container') {
+            steps {
+                  sh 'docker container rm --force fe'
+                  sh 'docker run -dt -p 80:80 --name fe test'
+            }
         }
     }
 }
