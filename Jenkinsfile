@@ -9,11 +9,6 @@
                 sh 'docker build -t test .'
             }
         }
-        stage('Remove old docker images') {
-             steps {
-                 sh 'docker rmi -f test'
-            }
-        }
          stage('Running the docker container') {
             steps {
                   sh 'docker container rm --force fe'
