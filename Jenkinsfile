@@ -1,21 +1,35 @@
-pipeline {
-    agent any
+ pipeline {
+    agent {
+      label 'docker'
+    }
 
     stages {
-        stage('Build') {
+      
+
+        stage('Build Docker Image') {
             steps {
-                echo 'Building..'
+                script {
+                    // Build the Docker image
+                    def dockerImage = docker.build('my-html-page:latest', "-f Dockerfile .")
+
+                    
+                    
+                }
             }
         }
-        stage('Test') {
+
+        stage('Deploy Docker Container') {
             steps {
-                echo 'Testing..'
+                // Run the Docker container
+                sh 'docker run -d -p 80:80 my-html-page:latest'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
+    }
+
+    post {
+        success {
+            // Perform any post-deployment actions here
+            echo 'HTML page deployed successfully.'
         }
     }
 }
