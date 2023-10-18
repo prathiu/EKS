@@ -29,10 +29,6 @@ pipeline {
                   sh 'docker push prathiusha/practice1'
             }
         }
-        stage('Remove old docker images') {
-             steps {
-                 sh 'docker rmi -f prathiusha/practice1'
-            }
         }
          stage('Running the docker container') {
             steps {
