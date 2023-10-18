@@ -29,7 +29,7 @@ pipeline {
                   sh 'docker push prathiusha/practice1'
             }
         }
-        }
+        
          stage('Running the docker container') {
             steps {
                   sh 'docker container rm --force container'
